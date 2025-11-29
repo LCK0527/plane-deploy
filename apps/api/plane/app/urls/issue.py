@@ -27,6 +27,10 @@ from plane.app.views import (
     WorkItemDescriptionVersionEndpoint,
     IssueMetaEndpoint,
     IssueDetailIdentifierEndpoint,
+    TimeEntryViewSet,
+    TimeEntryTimerEndpoint,
+    TimeEntryActiveTimerEndpoint,
+    TimeEntrySummaryEndpoint,
 )
 
 urlpatterns = [
@@ -278,5 +282,31 @@ urlpatterns = [
         "workspaces/<str:slug>/work-items/<str:project_identifier>-<str:issue_identifier>/",
         IssueDetailIdentifierEndpoint.as_view(),
         name="issue-detail-identifier",
+    ),
+    ## Time Entry endpoints
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/time-entries/",
+        TimeEntryViewSet.as_view({"get": "list", "post": "create"}),
+        name="issue-time-entries",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/time-entries/<uuid:pk>/",
+        TimeEntryViewSet.as_view({"patch": "partial_update", "delete": "destroy"}),
+        name="issue-time-entry-detail",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/time-entries/timer/",
+        TimeEntryTimerEndpoint.as_view(),
+        name="issue-time-entry-timer",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/time-entries/active-timer/",
+        TimeEntryActiveTimerEndpoint.as_view(),
+        name="issue-time-entry-active-timer",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/time-entries/summary/",
+        TimeEntrySummaryEndpoint.as_view(),
+        name="issue-time-entry-summary",
     ),
 ]

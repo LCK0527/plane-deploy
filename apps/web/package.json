@@ -4,7 +4,7 @@
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "NODE_OPTIONS='--max-old-space-size=8192' next dev --port 3000",
     "build": "next build",
     "start": "next start",
     "clean": "rm -rf .turbo && rm -rf .next && rm -rf node_modules && rm -rf dist",
@@ -76,6 +76,7 @@
     "@types/react": "catalog:",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "catalog:",
+    "baseline-browser-mapping": "^2.8.32",
     "prettier": "^3.2.5",
     "typescript": "catalog:"
   }

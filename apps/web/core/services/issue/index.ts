@@ -8,3 +8,4 @@ export * from "./issue_comment.service";
 export * from "./issue_relation.service";
 export * from "./work_item_version.service";
 export * from "./workspace_draft.service";
+export * from "./time_entry.service";

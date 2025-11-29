@@ -131,6 +131,12 @@ class Issue(ProjectBaseModel):
         null=True,
         blank=True,
     )
+    estimated_time_minutes = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        verbose_name="Estimated Time (minutes)",
+        help_text="Estimated time budget for this work item in minutes",
+    )
     name = models.CharField(max_length=255, verbose_name="Issue Name")
     description = models.JSONField(blank=True, default=dict)
     description_html = models.TextField(blank=True, default="<p></p>")
@@ -789,3 +795,104 @@ class IssueDescriptionVersion(ProjectBaseModel):
         except Exception as e:
             log_exception(e)
             return False
+
+
+class TimeEntrySource(models.TextChoices):
+    TIMER = "timer", "Timer"
+    MANUAL = "manual", "Manual"
+
+
+class TimeEntry(ProjectBaseModel):
+    """
+    Time tracking entries for work items.
+    
+    Supports both timer-based (start/stop) and manual time logging.
+    Each entry tracks time spent on a specific work item by a user.
+    """
+    
+    issue = models.ForeignKey(
+        Issue,
+        on_delete=models.CASCADE,
+        related_name="time_entries",
+        verbose_name="Work Item",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="time_entries",
+        verbose_name="User",
+    )
+    started_at = models.DateTimeField(
+        verbose_name="Started At",
+        null=True,
+        blank=True,
+        help_text="When the timer started (for timer entries) or when work began (for manual entries)",
+    )
+    ended_at = models.DateTimeField(
+        verbose_name="Ended At",
+        null=True,
+        blank=True,
+        help_text="When the timer stopped (for timer entries) or when work ended (for manual entries)",
+    )
+    duration_seconds = models.PositiveIntegerField(
+        verbose_name="Duration (seconds)",
+        default=0,
+        help_text="Total duration in seconds. For timer entries, computed when stopped.",
+    )
+    source = models.CharField(
+        max_length=20,
+        choices=TimeEntrySource.choices,
+        default=TimeEntrySource.MANUAL,
+        verbose_name="Source",
+        help_text="Whether this entry was created via timer or manual input",
+    )
+    note = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Note",
+        help_text="Optional note about what was worked on",
+    )
+    is_billable = models.BooleanField(
+        default=False,
+        verbose_name="Billable",
+        help_text="Whether this time entry is billable",
+    )
+
+    class Meta:
+        verbose_name = "Time Entry"
+        verbose_name_plural = "Time Entries"
+        db_table = "time_entries"
+        ordering = ("-created_at",)
+        indexes = [
+            models.Index(fields=["issue", "user"], name="time_entry_issue_user_idx"),
+            models.Index(fields=["started_at"], name="time_entry_started_at_idx"),
+            models.Index(fields=["created_at"], name="time_entry_created_at_idx"),
+        ]
+
+    def __str__(self):
+        return f"{self.user.email} - {self.issue.name} ({self.duration_seconds}s)"
+
+    def save(self, *args, **kwargs):
+        """
+        Auto-compute duration_seconds if ended_at is set but duration is 0.
+        For timer entries, ensure duration is computed when stopped.
+        """
+        if self.ended_at and self.started_at and self.duration_seconds == 0:
+            delta = self.ended_at - self.started_at
+            self.duration_seconds = max(0, int(delta.total_seconds()))
+        super().save(*args, **kwargs)
+
+    @property
+    def is_active(self):
+        """Check if this is an active timer (has started_at but no ended_at)."""
+        return self.started_at is not None and self.ended_at is None
+
+    @property
+    def duration_hours(self):
+        """Return duration in hours as a float."""
+        return self.duration_seconds / 3600.0
+
+    @property
+    def duration_minutes(self):
+        """Return duration in minutes as a float."""
+        return self.duration_seconds / 60.0

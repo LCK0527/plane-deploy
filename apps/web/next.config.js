@@ -9,10 +9,34 @@ const nextConfig = {
   swcMinify: true,
   output: "standalone",
   async headers() {
+    const isDev = process.env.NODE_ENV === "development";
+    
+    const headers = [
+      { key: "X-Frame-Options", value: "DENY" },
+    ];
+
+    // In development, add CSP that allows unsafe-eval for Next.js dev tools
+    if (isDev) {
+      headers.push({
+        key: "Content-Security-Policy",
+        value: [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+          "style-src 'self' 'unsafe-inline'",
+          "img-src 'self' blob: data: https:",
+          "connect-src 'self' http://localhost:* ws://localhost:* https:",
+          "font-src 'self' data:",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "frame-ancestors 'none'",
+        ].join("; "),
+      });
+    }
+
     return [
       {
         source: "/(.*)?",
-        headers: [{ key: "X-Frame-Options", value: "DENY" }],
+        headers: headers,
       },
     ];
   },

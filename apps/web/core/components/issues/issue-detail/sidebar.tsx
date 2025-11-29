@@ -25,7 +25,7 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 // components
 import { WorkItemAdditionalSidebarProperties } from "@/plane-web/components/issues/issue-details/additional-properties";
 import { IssueParentSelectRoot } from "@/plane-web/components/issues/issue-details/parent-select-root";
-import { IssueWorklogProperty } from "@/plane-web/components/issues/worklog/property";
+import { IssueTimeTrackingProperty } from "../time-tracking/property";
 import { IssueCycleSelect } from "./cycle-select";
 import { IssueLabel } from "./label";
 import { IssueModuleSelect } from "./module-select";
@@ -288,7 +288,7 @@ export const IssueDetailsSidebar: React.FC<Props> = observer((props) => {
               </div>
             </div>
 
-            <IssueWorklogProperty
+            <IssueTimeTrackingProperty
               workspaceSlug={workspaceSlug}
               projectId={projectId}
               issueId={issueId}

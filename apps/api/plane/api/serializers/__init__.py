@@ -53,3 +53,8 @@ from .asset import (
     GenericAssetUpdateSerializer,
     FileAssetSerializer,
 )
+from .time_entry import (
+    TimeEntrySerializer,
+    TimeEntryCreateSerializer,
+    TimeEntryUpdateSerializer,
+)

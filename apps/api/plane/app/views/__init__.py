@@ -233,3 +233,12 @@ from .notification.base import MarkAllReadNotificationViewSet
 from .user.base import AccountEndpoint, ProfileEndpoint, UserSessionEndpoint
 
 from .timezone.base import TimezoneEndpoint
+
+from .time_entry import (
+    TimeEntryViewSet,
+    TimeEntryTimerEndpoint,
+    TimeEntryActiveTimerEndpoint,
+    TimeEntrySummaryEndpoint,
+    TimeEntryReportsEndpoint,
+    TimeEntryExportEndpoint,
+)
