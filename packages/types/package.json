@@ -6,8 +6,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index-CxDIhT_2.d.ts"
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

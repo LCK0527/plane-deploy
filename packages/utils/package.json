@@ -8,8 +8,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index-DsZe6DvB.d.cts"
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
