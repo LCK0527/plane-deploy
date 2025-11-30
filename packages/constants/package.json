@@ -30,7 +30,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "types": "./dist/index-hL6D4otH.d.ts"
     },
     "./package.json": "./package.json"
   }

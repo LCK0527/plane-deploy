@@ -8,7 +8,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./dist/index-DVD890Os.d.cts"
     },
     "./package.json": "./package.json"
   },
