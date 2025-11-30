@@ -247,3 +247,9 @@ from .time_entry import (
     TimeEntryReportsEndpoint,
     TimeEntryExportEndpoint,
 )
+
+from .ai_chat.base import (
+    AIChatConversationViewSet,
+    AIChatSendMessageEndpoint,
+    AIChatTruncateConversationEndpoint,
+)

@@ -4,7 +4,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
-import { DraftIcon, HomeIcon, InboxIcon, YourWorkIcon } from "@plane/propel/icons";
+import { DraftIcon, HomeIcon, InboxIcon, YourWorkIcon, AiIcon } from "@plane/propel/icons";
 import { EUserWorkspaceRoles } from "@plane/types";
 // hooks
 import { useUserPermissions, useUser } from "@/hooks/store/user";
@@ -30,6 +30,13 @@ export const SidebarUserMenu = observer(() => {
       href: `/${workspaceSlug.toString()}/profile/${currentUser?.id}/`,
       access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
       Icon: YourWorkIcon,
+    },
+    {
+      key: "ai-chat",
+      labelTranslationKey: "sidebar.ai_chat",
+      href: `/${workspaceSlug.toString()}/ai-chat/`,
+      access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER, EUserWorkspaceRoles.GUEST],
+      Icon: AiIcon,
     },
     {
       key: "notifications",

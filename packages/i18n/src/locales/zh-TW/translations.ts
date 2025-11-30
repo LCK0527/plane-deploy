@@ -5,6 +5,7 @@ export default {
     new_work_item: "新工作項目",
     home: "首頁",
     your_work: "你的工作",
+    ai_chat: "AI 對話",
     inbox: "收件匣",
     workspace: "工作區",
     views: "視圖",

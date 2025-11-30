@@ -6,6 +6,7 @@ import { PreloadResources } from "./layout.preload";
 import "@/styles/command-pallette.css";
 import "@/styles/emoji.css";
 import "@plane/propel/styles/react-day-picker";
+import "katex/dist/katex.min.css";
 
 export const metadata: Metadata = {
   robots: {

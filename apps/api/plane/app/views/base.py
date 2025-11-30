@@ -188,8 +188,9 @@ class BaseAPIView(TimezoneMixin, ReadReplicaControlMixin, APIView, BasePaginator
                 )
 
             if isinstance(e, KeyError):
+                log_exception(e)
                 return Response(
-                    {"error": "The required key does not exist."},
+                    {"error": f"The required key does not exist: {str(e)}"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

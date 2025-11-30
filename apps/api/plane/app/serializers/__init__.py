@@ -128,3 +128,11 @@ from .draft import (
     DraftIssueSerializer,
     DraftIssueDetailSerializer,
 )
+
+from .ai_chat import (
+    AIChatConversationSerializer,
+    AIChatConversationDetailSerializer,
+    AIChatConversationCreateSerializer,
+    AIChatMessageSerializer,
+    AIChatSendMessageSerializer,
+)

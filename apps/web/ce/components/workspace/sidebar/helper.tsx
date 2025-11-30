@@ -8,6 +8,7 @@ import {
   ProjectIcon,
   ViewsIcon,
   YourWorkIcon,
+  AiIcon,
 } from "@plane/propel/icons";
 import { cn } from "@plane/utils";
 
@@ -27,9 +28,13 @@ export const getSidebarNavigationItemIcon = (key: string, className: string = ""
       return <AnalyticsIcon className={cn("size-4 flex-shrink-0", className)} />;
     case "your_work":
       return <YourWorkIcon className={cn("size-4 flex-shrink-0", className)} />;
+    case "ai-chat":
+      return <AiIcon className={cn("size-4 flex-shrink-0", className)} />;
     case "drafts":
       return <DraftIcon className={cn("size-4 flex-shrink-0", className)} />;
     case "archives":
       return <ArchiveIcon className={cn("size-4 flex-shrink-0", className)} />;
+    default:
+      return null;
   }
 };

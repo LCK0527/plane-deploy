@@ -1,5 +1,6 @@
 from .analytic import urlpatterns as analytic_urls
 from .api import urlpatterns as api_urls
+from .ai_chat import urlpatterns as ai_chat_urls
 from .asset import urlpatterns as asset_urls
 from .cycle import urlpatterns as cycle_urls
 from .estimate import urlpatterns as estimate_urls
@@ -21,6 +22,7 @@ from .exporter import urlpatterns as exporter_urls
 
 urlpatterns = [
     *analytic_urls,
+    *ai_chat_urls,
     *asset_urls,
     *cycle_urls,
     *estimate_urls,

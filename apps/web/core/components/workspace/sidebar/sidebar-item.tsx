@@ -40,7 +40,7 @@ export const SidebarItemBase: FC<Props> = observer(({ item, additionalRender, ad
     if (isExtendedSidebarOpened) toggleExtendedSidebar(false);
   };
 
-  const staticItems = ["home", "inbox", "pi_chat", "projects", "your_work", ...(additionalStaticItems || [])];
+  const staticItems = ["home", "inbox", "ai-chat", "pi_chat", "projects", "your_work", ...(additionalStaticItems || [])];
   const slug = workspaceSlug?.toString() || "";
 
   if (!allowPermissions(item.access, EUserPermissionsLevel.WORKSPACE, slug)) return null;
@@ -58,7 +58,9 @@ export const SidebarItemBase: FC<Props> = observer(({ item, additionalRender, ad
       <SidebarNavItem isActive={item.highlight(pathname, itemHref)}>
         <div className="flex items-center gap-1.5 py-[1px]">
           {icon}
-          <p className="text-sm leading-5 font-medium">{t(item.labelTranslationKey)}</p>
+          <p className="text-sm leading-5 font-medium">
+            {item.key === "ai-chat" ? "AI" : t(item.labelTranslationKey)}
+          </p>
         </div>
         {item.key === "inbox" && <NotificationAppSidebarOption workspaceSlug={slug} />}
         {additionalRender?.(item.key, slug)}
